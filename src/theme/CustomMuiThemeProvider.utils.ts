@@ -8,10 +8,12 @@ import {
 
 export const useThemeToggler = () => useContext(CustomMuiThemeProviderContext);
 
-export const toggleTheme = (
-  state: CustomTheme,
-  // action: string
-): CustomTheme => {
+interface ThemeToggler {
+  (state: CustomTheme): CustomTheme;
+}
+
+
+export const toggleTheme: ThemeToggler = (state: CustomTheme) => {
   if (state.palette.mode === "dark") {
     return appDarkTheme;
   }

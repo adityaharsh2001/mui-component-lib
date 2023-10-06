@@ -1,26 +1,84 @@
+// ThemeProvider.tsx
 import React, { useReducer } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from '@mui/material/CssBaseline';
-import { appLightTheme,  CustomMuiThemeProviderContext } from "./CustomMuiThemeProvider.constants";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import {
+  appLightTheme,
+  appDarkTheme,
+  CustomMuiThemeProviderContext,
+  CustomTheme,
+} from "./CustomMuiThemeProvider.constants";
 import { toggleTheme } from "./CustomMuiThemeProvider.utils";
 
 interface IProps {
-    children: React.ReactNode;
-    
+  children: React.ReactNode;
+  defaultThemeMode: "dark" | "light"; // Accept "light" or "dark" as the default theme mode
+  customLightColors?: object;
+  customDarkColors?: object;
+  palette?: object;
+  typography?: object;
 }
 
-export const CustomMuiThemeProvider: React.FC<IProps> = props => {
-  const [currentTheme, dispatch] = useReducer(toggleTheme, appLightTheme);
+export const CustomMuiThemeProvider: React.FC<IProps> = ({
+  children,
+  defaultThemeMode,
+  customLightColors,
+  customDarkColors,
+  palette,
+  typography,
+}) => {
+  // Determine the initial theme based on the defaultThemeMode prop
+  const initialTheme = defaultThemeMode === "dark" ? appLightTheme : appDarkTheme;
 
-  return ( 
-    <CustomMuiThemeProviderContext.Provider value={dispatch as unknown}>
-      <ThemeProvider theme={currentTheme}>
+  const [currentTheme, dispatch] = useReducer(toggleTheme, initialTheme);
+
+  // Merge custom colors with the themes
+  const customLightTheme = {
+    ...appLightTheme,
+    palette: {
+      ...appLightTheme.palette,
+      ...customLightColors,
+    },
+  } as CustomTheme;
+
+  const customDarkTheme = {
+    ...appDarkTheme,
+    palette: {
+      ...appDarkTheme.palette,
+      ...customDarkColors,
+    },
+  } as CustomTheme;
+
+  if (palette) {
+    customLightTheme.palette = {
+      ...customLightTheme.palette,
+      ...palette,
+    };
+
+    customDarkTheme.palette = {
+      ...customDarkTheme.palette,
+      ...palette,
+    };
+  }
+
+  if (typography) {
+    customLightTheme.typography = {
+      ...customLightTheme.typography,
+      ...typography,
+    };
+
+    customDarkTheme.typography = {
+      ...customDarkTheme.typography,
+      ...typography,
+    };
+  }
+
+  return (
+    <CustomMuiThemeProviderContext.Provider value={dispatch as never}>
+      <MuiThemeProvider theme={currentTheme === appLightTheme ? customLightTheme : customDarkTheme}>
         <CssBaseline />
-        {props.children}
-      </ThemeProvider>
+        {children}
+      </MuiThemeProvider>
     </CustomMuiThemeProviderContext.Provider>
   );
 };
-
-CustomMuiThemeProvider.displayName = "CustomMuiThemeProvider";
-CustomMuiThemeProvider.defaultProps = {};
