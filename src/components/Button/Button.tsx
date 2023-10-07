@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "@emotion/styled";
-import { css, Theme } from "@emotion/react";
+import { css } from "@emotion/react";
+import { Theme } from '@mui/material/styles';
 import { CircularProgress } from "@mui/material";
 
 export interface ButtonProps {
@@ -16,12 +17,10 @@ export interface ButtonProps {
   outlined?: boolean;
   loaderColor?: string;
   Css?: string; // Add a new prop for custom CSS
+  theme?: Theme;
 }
 
-const getButtonStyles = (
-  { variant, outlined }: ButtonProps,
-  theme: Theme
-) => {
+const getButtonStyles = ( { variant, outlined }: ButtonProps, theme: Theme ) => {
   const commonStyles = css`
     padding: 8px 16px;
     border-radius: 4px;

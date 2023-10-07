@@ -2,7 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { ThemeProvider } from "./theme";
 import { SomeComponent } from "./playground/SomeComponent";
-import { Button } from "mui-custom-lib";
+import { Button } from "./components";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -119,7 +119,6 @@ function App() {
           <Button
             variant="primary"
             label="Custom CSS Button"
-            Css="background-color: purple; color: white;"
             isLoading={isLoading}
             onClick={handleClick}
           ></Button>

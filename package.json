@@ -53,8 +53,5 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
-  "dependencies": {
-    "mui-custom-lib": "file:mui-custom-lib-0.0.0.tgz"
-  }
+  "types": "dist/index.d.ts"
 }
