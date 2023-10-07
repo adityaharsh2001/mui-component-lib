@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import React from "react";
 import { createTheme, Theme } from "@mui/material/styles";
 
-export const CustomMuiThemeProviderContext = React.createContext(null);
+export const CustomMuiThemeProviderContext = React.createContext(null as any);
 
 export const lightStyles = {
   isLightTheme: false,
@@ -36,4 +38,3 @@ export const appLightTheme = createTheme(
   },
   lightStyles
 ) as CustomTheme;
-

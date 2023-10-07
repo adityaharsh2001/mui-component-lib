@@ -1,4 +1,5 @@
 // ThemeProvider.tsx
+"use client";
 import React, { useReducer } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -28,7 +29,8 @@ export const CustomMuiThemeProvider: React.FC<IProps> = ({
   typography,
 }) => {
   // Determine the initial theme based on the defaultThemeMode prop
-  const initialTheme = defaultThemeMode === "dark" ? appLightTheme : appDarkTheme;
+  const initialTheme =
+    defaultThemeMode === "dark" ? appLightTheme : appDarkTheme;
 
   const [currentTheme, dispatch] = useReducer(toggleTheme, initialTheme);
 
@@ -75,7 +77,10 @@ export const CustomMuiThemeProvider: React.FC<IProps> = ({
 
   return (
     <CustomMuiThemeProviderContext.Provider value={dispatch as never}>
-      <MuiThemeProvider theme={currentTheme === appLightTheme ? customLightTheme : customDarkTheme}>
+      <MuiThemeProvider
+        theme={
+          currentTheme === appLightTheme ? customLightTheme : customDarkTheme
+        }>
         <CssBaseline />
         {children}
       </MuiThemeProvider>
