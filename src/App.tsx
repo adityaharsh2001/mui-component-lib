@@ -1,8 +1,8 @@
 import "./App.css";
 import { useState } from "react";
-import { ThemeProvider } from "./theme";
+import { ThemeProvider } from "mui-custom-lib";
 import { SomeComponent } from "./playground/SomeComponent";
-import { Button } from "./components";
+import { Button } from "mui-custom-lib";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);

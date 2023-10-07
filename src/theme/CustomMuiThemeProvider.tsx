@@ -1,6 +1,6 @@
 // ThemeProvider.tsx
 "use client";
-import React, { useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {
@@ -9,11 +9,11 @@ import {
   CustomMuiThemeProviderContext,
   CustomTheme,
 } from "./CustomMuiThemeProvider.constants";
-import { toggleTheme } from "./CustomMuiThemeProvider.utils";
+import { useThemeToggler, toggleTheme } from "./CustomMuiThemeProvider.utils";
 
 interface IProps {
   children: React.ReactNode;
-  defaultThemeMode: "dark" | "light"; // Accept "light" or "dark" as the default theme mode
+  defaultThemeMode: "dark" | "light"; 
   customLightColors?: object;
   customDarkColors?: object;
   palette?: object;
@@ -28,11 +28,11 @@ export const CustomMuiThemeProvider: React.FC<IProps> = ({
   palette,
   typography,
 }) => {
-  // Determine the initial theme based on the defaultThemeMode prop
-  const initialTheme =
-    defaultThemeMode === "dark" ? appLightTheme : appDarkTheme;
+  const [currentTheme, setCurrentTheme] = useState(
+    defaultThemeMode === "dark" ? appLightTheme : appDarkTheme
+  );
 
-  const [currentTheme, dispatch] = useReducer(toggleTheme, initialTheme);
+  const themeToggler = useThemeToggler();
 
   // Merge custom colors with the themes
   const customLightTheme = {
@@ -75,12 +75,21 @@ export const CustomMuiThemeProvider: React.FC<IProps> = ({
     };
   }
 
+  useEffect(() => {
+    setCurrentTheme(defaultThemeMode === "dark" ? appLightTheme : appDarkTheme);
+  }, [defaultThemeMode]);
+
+  const handleToggleTheme = () => {
+    const newTheme = toggleTheme(currentTheme);
+    setCurrentTheme(newTheme);
+    themeToggler(newTheme);
+  };
+
   return (
-    <CustomMuiThemeProviderContext.Provider value={dispatch as never}>
+    <CustomMuiThemeProviderContext.Provider value={handleToggleTheme as never}>
       <MuiThemeProvider
-        theme={
-          currentTheme === appLightTheme ? customLightTheme : customDarkTheme
-        }>
+        theme={currentTheme === appLightTheme ? customLightTheme : customDarkTheme}
+      >
         <CssBaseline />
         {children}
       </MuiThemeProvider>
