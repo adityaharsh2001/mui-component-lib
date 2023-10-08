@@ -17,7 +17,7 @@ interface CustomCardProps {
   header?: React.ReactNode;
   content?: React.ReactNode;
   footer?: React.ReactNode;
-  Css?: string; // Use SerializedStyles for Emotion CSS
+  Css?: string;
   theme?: Theme;
   //allow children
   children?: React.ReactNode;  

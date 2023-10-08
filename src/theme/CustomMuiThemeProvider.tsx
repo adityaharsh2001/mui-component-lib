@@ -3,12 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import {
-  appLightTheme,
-  appDarkTheme,
-  CustomMuiThemeProviderContext,
-  CustomTheme,
-} from "./CustomMuiThemeProvider.constants";
+import { appLightTheme, appDarkTheme, CustomMuiThemeProviderContext, CustomTheme } from "./CustomMuiThemeProvider.constants";
 import { useThemeToggler, toggleTheme } from "./CustomMuiThemeProvider.utils";
 
 interface IProps {

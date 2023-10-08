@@ -3,16 +3,24 @@ import { useState } from "react";
 import { ThemeProvider } from "mui-custom-lib";
 import { SomeComponent } from "./playground/SomeComponent";
 import { Button } from "mui-custom-lib";
-import { Card } from ".";
-
+import { Card, Modal } from ".";
 function App() {
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleClick = async () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   const customLightColors = {
@@ -120,6 +128,24 @@ function App() {
           content="Custom Card Content"
           footer="Custom Card Footer"
         />
+        <div>
+          <button onClick={handleOpenModal}>Open Custom Modal</button>
+
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            padding="24px"
+            margin="8px"
+            Css={`
+    background-color: lightblue;
+    color: navy;
+    border: 2px solid darkblue;
+  `}>
+            <h2>Custom Modal Content</h2>
+            <p>This is a draggable custom modal.</p>
+            <button onClick={handleCloseModal}>Close</button>
+          </Modal>
+        </div>
       </ThemeProvider>
     </div>
   );
